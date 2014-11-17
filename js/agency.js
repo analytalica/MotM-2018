@@ -24,3 +24,10 @@ $('body').scrollspy({
 $('.navbar-collapse ul li a').click(function() {
     $('.navbar-toggle:visible').click();
 });
+
+
+$('.imgs').mouseenter(function() {
+		$(this).addClass("pulse");
+	}).mouseleave(function() {
+		$(this).removeClass("pulse");
+	});
