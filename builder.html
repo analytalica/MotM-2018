@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Resume Builder</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jspdf.js"></script>
+    <script src="js/FileSaver.min.js"></script>
+    <script src="js/jspdf.plugin.split_text_to_size.js"></script>
+    <script src="js/jspdf.plugin.standard_fonts_metrics.js"></script>
+    <script src="js/jspdf.plugin.center_text.js"></script>
+    <script src="js/libs/base64.js"></script>
+    <script src="js/libs/sprintf.js"></script>
+    <script src="js/main.js"></script>
+</head>
+<body class="container-fluid">
+    <div class="jumbotron">
+        <div style="text-align: center;"><h1>Resume Builder</h1></div>
+        <p style="text-align: center;">A simple, intuitive resume builder by a UTCS student for UTCS students!</p>
+    </div>
+    <div class="col-md-1"></div>
+    <form id="builder" class="form-horizontal col-md-4" role="form">
+        <div id="contact" class="form-group">
+            <h2> Contact info </h2>
+            <div>
+                <label for="name" >First and Last Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter your first and last name" required>
+            </div>
+            <div>
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+            </div>
+            <div>
+                <label for="website">Personal website</label>
+                <input type="email" class="form-control" id="website" placeholder="Enter your personal website URL (optional)">
+            </div>
+            <div>
+                <label for="phone">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" placeholder="Enter Phone Number" required>
+            </div>
+        </div>
+        <div id="education" class="form-group">
+            <h2> Education </h2>
+            <div>
+                <label for="degreeType">Seeking a.. </label>
+                <select class="form-control" id="degreeType" required>
+                    <option>Bachelor's of Science</option>
+                    <option>Bachelor's of Arts</option>
+                    <option>Bachelor's of Science and Arts</option>
+                    <option>Bachelor's and Master's of Science</option>
+                    <option>Turing Scholar -- Bachelor's of Science</option>
+                    <option>UTeach -- Bachelor's of Science</option>
+                </select>
+            </div>
+            <div>
+                <label for="gpa">GPA</label>
+                <div class="input-group">
+                    <input type="range" min="1.0" max="4.0" step=".01" value="2.5" class="form-control" id="gpa" placeholder="Enter your gpa (optional)" onchange="rangevalue.value=value"  style="height:41px">
+                    <span class="input-group-addon"><output id="rangevalue">2.5</output></span>
+                </div>
+            </div>
+            <div>
+                <label for="honors">Honors</label>
+                <input type="text" class="form-control" id="honors" placeholder="Enter honors programs (optional)">
+            </div>
+            <div>
+                <label for="grad">Expected Graduation Date</label>
+                <input type="month" class="form-control" id="grad">
+            </div>
+        </div>
+        <div id="exp" class="form-group">
+            <h2>Experience</h2>
+            <h3>Job 1</h3>
+            <div>
+                <label for="company">Company/Organization</label>
+                <input type="text" class="form-control" id="company" placeholder="Enter the name of the company/orgainzation you worked for">
+            </div>
+            <div>
+                <label for="location">Location</label>
+                <input type="text" class="form-control" id="location" placeholder="Enter the location of the company/orgainzation you worked for">
+            </div>
+            <div>
+                <label for="start">Start Date</label>
+                <input type="month" class="form-control" id="start">
+            </div>
+            <div>
+                <label for="end">End Date</label>
+                <div class="input-group">
+                    <span class="input-group-addon">Current <input type="checkbox" id="current"></span>
+                    <input type="month" class="form-control" id="end">
+                </div>
+            </div>
+            <div>
+                <label for="title">Job Title</label>
+                <input type="text" class="form-control" id="title" placeholder="Enter your job title">
+            </div>
+            <div>
+                <label for="descrip">Description of your position</label>
+                <textarea type="text" class="form-control" id="descrip" placeholder="Describe what you did at the company"></textarea>
+            </div>
+            <h3>Job 2</h3>
+            <div>
+                <label for="company">Company/Organization</label>
+                <input type="text" class="form-control" id="company2" placeholder="Enter the name of the company/orgainzation you worked for">
+            </div>
+            <div>
+                <label for="location">Location</label>
+                <input type="text" class="form-control" id="location2" placeholder="Enter the location of the company/orgainzation you worked for">
+            </div>
+            <div>
+                <label for="start">Start Date</label>
+                <input type="month" class="form-control" id="start2">
+            </div>
+            <div>
+                <label for="end">End Date</label>
+                <div class="input-group">
+                    <span class="input-group-addon">Current <input type="checkbox" id="current2"></span>
+                    <input type="month" class="form-control" id="end2">
+                </div>
+            </div>
+            <div>
+                <label for="title">Job Title</label>
+                <input type="text" class="form-control" id="title2" placeholder="Enter your job title">
+            </div>
+            <div>
+                <label for="descrip">Description of your position</label>
+                <textarea type="text" class="form-control" id="descrip2" placeholder="Describe what you did at the company"></textarea>
+            </div>
+        </div>
+        <div id="projects" class="form-group">
+            <h2> Projects </h2>
+            <div class="col-lg-12">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="project" placeholder="Enter a description of your project.">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-plus-sign"></span></button>
+                        </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-12 -->
+        </div>
+        <div id="skills" class="form-group">
+            <h2> Technical Skills </h2>
+            <div>
+                <table class="table table-hover">
+                    <tr>
+                        <th></th>
+                        <th colspan="11" style="text-align: center;">Language</th>
+                    </tr>
+                    <tr>
+                        <th>Level of Knowledge</th>
+                        <td>C</td>
+                        <td>C++</td>
+                        <td>C#</td>
+                        <td>Obj-C</td>
+                        <td>Java</td>
+                        <td>PHP</td>
+                        <td>Python</td>
+                        <td>JavaScript</td>
+                        <td>Perl</td>
+                        <td>
+                            <div>
+                                <input type="text" class="form-control" id="other" placeholder="Other..">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Exposed to</td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="C" id="CRadios1" value="option1">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="C++" id="C++Radios1" value="option1">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="C#" id="C#Radios1" value="option1">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="ObjC" id="ObjCRadios1" value="option1">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="Java" id="JavaRadios1" value="option1">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="PHP" id="PHPRadios1" value="option1">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="Python" id="PythonRadios1" value="option1">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="JS" id="JSRadios1" value="option1">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="Perl" id="PerlRadios1" value="option1">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="other" id="OtherRadios1" value="option1">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Proficient in</td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="C" id="CRadios2" value="option2">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="C++" id="C++Radios2" value="option2">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="C#" id="C#Radios2" value="option2">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="ObjC" id="ObjCRadios2" value="option2">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="Java" id="JavaRadios2" value="option2">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="PHP" id="PHPRadios2" value="option2">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="Python" id="PythonRadios2" value="option2">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="JS" id="JSRadios2" value="option2">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="Perl" id="PerlRadios2" value="option2">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="other" id="OtherRadios2" value="option2">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Expert on</td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="C" id="CRadios3" value="option3">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="C++" id="C++Radios3" value="option3">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="C#" id="C#Radios3" value="option3">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="ObjC" id="ObjCRadios3" value="option3">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="Java" id="JavaRadios3" value="option3">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="PHP" id="PHPRadios3" value="option3">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="Python" id="PythonRadios3" value="option3">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="JS" id="JSRadios3" value="option3">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="Perl" id="PerlRadios3" value="option3">
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="other" id="OtherRadios3" value="option3">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="leadership" class="form-group">
+            <h2> Community Involvement/Leadership </h2>
+            <div class="col-lg-12">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="comm" placeholder="Enter community involvements and leadership experiences">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-plus-sign"></span></button>
+                        </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-12 -->
+        </div>
+    </form>
+
+    <div class="col-md-1"></div>
+
+    <div id="preview" class="col-md-4">
+        <div class="row-fluid">
+            <h1>Live Preview</h1>
+            <div>
+                <iframe id="output" class="preview-pane embed-responsive-item" type="application/pdf" width="100%" height="750" frameborder="0" style="position:relative;z-index:999"></iframe>
+            </div>
+
+            <div class="controls">
+                <div>
+                    <a href="#" id="download" class="btn btn-lg btn-block btn-primary download-pdf">Download PDF</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <footer style="clear:both;height:120px; width:100%;">
+
+    </footer>
+</body>
+</html>
