@@ -26,6 +26,12 @@ function getInfo(isDefault){
             start: "May 2012",
             end: "August 2012",
             descrip: "Created end-to-end support for an intelligent media extractor that is activated when pasting a link in the Google+ sharebox, as part of Google+ front end team",
+            company2: "Lockheed Martin,",
+            location2: " Gaithersburg, MD",
+            title2: "Summer Intern",
+            start2: "May 2011",
+            end2: "August 2011",
+            descrip2: "Constructed an SNMP trap receiver that could parse and identify requested traps into syslog messages for R&D cyber security and networking management team",
             project: "Implemented the Paxos algorithm for reaching consensus among state machines in a distributed system in the context of a music playlist, and then extended it to instead implement the Bayou algorithm for reaching consensus by use of a gossip protocol in the same context of a music playlist"
         };
 
@@ -134,6 +140,7 @@ function createDoc(info){
     printLine("EXPERIENCE",null,null,"bold",true);
     doc.line(margin,currentY +.025,pageWidth-margin,currentY+.025);
     nextLine();
+    //job 1
 
     printLine(info.company,null,null,"bold",true);
     doc.setFontStyle("normal");
@@ -152,6 +159,7 @@ function createDoc(info){
     nextLine();
     currentY += .3;
 
+    //job 2
     printLine(info.company2,null,null,"bold",true);
     doc.setFontStyle("normal");
     doc.text(info.location2,margin+getTextWidth(info.company2+" "),currentY);
@@ -169,12 +177,13 @@ function createDoc(info){
     nextLine();
     currentY += .3;
 
+    //projects section
     printLine("PROJECTS",null,null,"bold",true);
     doc.line(margin,currentY +.025,pageWidth-margin,currentY+.025);
     nextLine();
     doc.setFontStyle("normal");
-    var newDescrip = doc.splitTextToSize("• " + info.project,pageWidth-((2*margin)+indent),null);
-    doc.text(newDescrip,margin+indent,currentY);
+    var newDescrip3 = doc.splitTextToSize("• " + info.project,pageWidth-((2*margin)+indent),null);
+    doc.text(newDescrip3,margin+indent,currentY);
     nextLine();
 
     return doc;
