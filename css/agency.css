@@ -947,20 +947,12 @@ text-align: left;
 
 }
 
-.content-box{
-    height: 100%;
-    padding-bottom: 80px;
-}
-
 .imgs{
     border: white 10px solid;
     box-shadow: 0px 0px 2px gray;
     margin-top: 20px;
 }
 
-.skills-list {
-	text-align: left;
-}
-.skills-list li{
-	margin-bottom: 4px;
+h2.element{
+	margin-top: 40px;
 }
